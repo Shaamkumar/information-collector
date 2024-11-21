@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>View Assignments</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+  <h1 class="text-center mb-4">Submitted Assignments</h1>
+  <table class="table table-bordered table-striped">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Student Name</th>
+      <th>Student ID</th>
+      <th>Course Name</th>
+      <th>Assignment File</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="assignment : ${assignments}">
+      <td th:text="${assignment.id}"></td>
+      <td th:text="${assignment.studentName}"></td>
+      <td th:text="${assignment.studentId}"></td>
+      <td th:text="${assignment.courseName}"></td>
+      <td>
+        <a th:href="@{/view-pdf/{fileName}(fileName=${assignment.assignmentFileName})}"
+           target="_blank" class="btn btn-sm btn-primary">View PDF</a>
+      </td>
+      <td>
+        <form action="/delete-assignment" method="post" style="display:inline;">
+          <input type="hidden" name="id" th:value="${assignment.id}">
+          <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?');">
+            Delete
+          </button>
+        </form>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <a href="/" class="btn btn-primary">Back to Dashboard</a>
+</div>
+<footer class="mt-5 bg-dark text-white text-center py-3">
+  <p>&copy; 2024 Educational Dashboard. All Rights Reserved.</p>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
